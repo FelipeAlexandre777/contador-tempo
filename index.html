@@ -116,14 +116,26 @@
 
         function updateCounter() {
             const now = new Date();
-            const diff = now - dataInicio;
 
-            const segundos = Math.floor(diff / 1000) % 60;
-            const minutos = Math.floor(diff / (1000 * 60)) % 60;
-            const horas = Math.floor(diff / (1000 * 60 * 60)) % 24;
-            const dias = Math.floor(diff / (1000 * 60 * 60 * 24)) % 30;
-            const meses = Math.floor(diff / (1000 * 60 * 60 * 24 * 30)) % 12;
-            const anos = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+            let anos = now.getFullYear() - dataInicio.getFullYear();
+            let meses = now.getMonth() - dataInicio.getMonth();
+            let dias = now.getDate() - dataInicio.getDate();
+
+            if (meses < 0) {
+                anos--;
+                meses += 12;
+            }
+
+            if (dias < 0) {
+                meses--;
+                let ultimoMes = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+                dias += ultimoMes;
+            }
+
+            const diffMs = now - dataInicio;
+            const horas = Math.floor((diffMs / (1000 * 60 * 60)) % 24);
+            const minutos = Math.floor((diffMs / (1000 * 60)) % 60);
+            const segundos = Math.floor((diffMs / 1000) % 60);
 
             const counterElement = document.getElementById("counter");
             counterElement.classList.add("fade-in"); 
@@ -133,7 +145,7 @@
                     ${horas} horas, ${minutos} minutos, ${segundos} segundos
                 `;
                 counterElement.classList.remove("fade-in");
-            }, 150);
+            }, 50);
         }
         setInterval(updateCounter, 1000);
 
