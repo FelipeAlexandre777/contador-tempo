@@ -10,7 +10,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column; /* Alinha todos os elementos no centro */
+            flex-direction: column;
             height: 100vh;
             margin: 0;
             background: linear-gradient(to bottom right, #8b0000, #ff0000);
@@ -64,7 +64,6 @@
             margin-bottom: 20px;
             box-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.6), 0 0 30px rgba(255, 0, 0, 0.4);
         }
-        /* Estilos para corações caindo */
         @keyframes fall {
             0% { transform: translateY(-10vh) scale(0.8) rotate(0); opacity: 1; }
             100% { transform: translateY(100vh) scale(1.2) rotate(360deg); opacity: 0; }
@@ -72,12 +71,10 @@
         .heart-fall {
             position: fixed;
             top: -10vh;
-            font-size: 30px;
             color: red;
             opacity: 0.7;
-            animation: fall 5s linear infinite;
+            animation: fall linear infinite;
         }
-        /* Estilo do tempo real no topo */
         #current-time {
             font-size: 1.2em;
             color: white;
@@ -94,11 +91,14 @@
             .heart-fall {
                 font-size: 20px;
             }
+            img {
+                max-width: 80%;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="current-time"></div> <!-- Aqui fica o tempo real -->
+    <div id="current-time"></div>
     <div class="counter">
         <h1>
             <span class="heart">❤️</span> CONTADOR DE TEMPO JUNTOS <span class="heart">❤️</span>
@@ -112,38 +112,41 @@
 
         function updateCounter() {
             const now = new Date();
-            const diff = now - dataInicio;
 
-            const segundos = Math.floor(diff / 1000);
-            const minutos = Math.floor(segundos / 60);
-            const horas = Math.floor(minutos / 60);
-            const dias = Math.floor(horas / 24);
-            const meses = Math.floor(dias / 30);
-            const anos = Math.floor(meses / 12);
+            let anos = now.getFullYear() - dataInicio.getFullYear();
+            let meses = now.getMonth() - dataInicio.getMonth();
+            let dias = now.getDate() - dataInicio.getDate();
 
-            const segundosRestantes = segundos % 60;
-            const minutosRestantes = minutos % 60;
-            const horasRestantes = horas % 24;
-            const diasRestantes = dias % 30;
-            const mesesRestantes = meses % 12;
+            if (dias < 0) {
+                meses--;
+                let ultimoDiaMesAnterior = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+                dias += ultimoDiaMesAnterior;
+            }
+
+            if (meses < 0) {
+                anos--;
+                meses += 12;
+            }
+
+            const horas = now.getHours().toString().padStart(2, '0');
+            const minutos = now.getMinutes().toString().padStart(2, '0');
+            const segundos = now.getSeconds().toString().padStart(2, '0');
 
             document.getElementById("counter").innerHTML = `
-                ${anos} anos, ${mesesRestantes} meses, ${diasRestantes} dias<br>
-                ${horasRestantes} horas, ${minutosRestantes} minutos, ${segundosRestantes} segundos
+                ${anos} anos, ${meses} meses, ${dias} dias<br>
+                ${horas} horas, ${minutos} minutos, ${segundos} segundos
             `;
         }
         setInterval(updateCounter, 1000);
 
-        // Função para mostrar a data e hora real
         function updateCurrentTime() {
             const now = new Date();
             const diasDaSemana = ["domingo", "segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sábado"];
             const mesesDoAno = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
             const dia = now.getDate();
-            const mes = mesesDoAno[now.getMonth()];  // Agora o mês está por extenso
+            const mes = mesesDoAno[now.getMonth()];
             const ano = now.getFullYear();
             const diaSemana = diasDaSemana[now.getDay()];
-            
             const horas = now.getHours().toString().padStart(2, '0');
             const minutos = now.getMinutes().toString().padStart(2, '0');
             const segundos = now.getSeconds().toString().padStart(2, '0');
@@ -153,7 +156,6 @@
         }
         setInterval(updateCurrentTime, 1000);
 
-        // Limitar a quantidade de corações caindo
         let heartsOnScreen = 0;
         function createFallingHeart() {
             if (heartsOnScreen < 10) {
@@ -161,7 +163,8 @@
                 heart.innerHTML = "❤️";
                 heart.classList.add("heart-fall");
                 heart.style.left = Math.random() * 100 + "vw";
-                heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+                heart.style.animationDuration = (Math.random() * 3 + 2) + "s"; 
+                heart.style.fontSize = Math.random() * 20 + 20 + "px";
                 document.body.appendChild(heart);
                 heartsOnScreen++;
                 setTimeout(() => {
