@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de Tempo Juntos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .counter {
+            text-align: center;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2em;
+        }
+        .time {
+            font-size: 1.5em;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="counter">
+        <h1>Tempo Juntos</h1>
+        <div class="time" id="counter"></div>
+    </div>
+
+    <script>
+        const dataInicio = new Date("2023-01-01T00:00:00"); // Substitua com a data de início do relacionamento
+        function updateCounter() {
+            const now = new Date();
+            const diff = now - dataInicio;
+
+            const segundos = Math.floor(diff / 1000);
+            const minutos = Math.floor(segundos / 60);
+            const horas = Math.floor(minutos / 60);
+            const dias = Math.floor(horas / 24);
+            const meses = Math.floor(dias / 30);
+            const anos = Math.floor(meses / 12);
+
+            const segundosRestantes = segundos % 60;
+            const minutosRestantes = minutos % 60;
+            const horasRestantes = horas % 24;
+            const diasRestantes = dias % 30;
+            const mesesRestantes = meses % 12;
+
+            document.getElementById("counter").innerHTML = `
+                ${anos} anos, ${mesesRestantes} meses, ${diasRestantes} dias<br>
+                ${horasRestantes} horas, ${minutosRestantes} minutos, ${segundosRestantes} segundos
+            `;
+        }
+
+        setInterval(updateCounter, 1000); // Atualiza a cada 1 segundo
+    </script>
+</body>
+</html>
