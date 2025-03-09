@@ -15,6 +15,7 @@
             background-color: #8b0000; /* Fundo vermelho escuro */
             color: white;
             text-align: center;
+            overflow: hidden; /* Evita rolagem com os corações caindo */
         }
         .counter {
             padding: 30px;
@@ -32,12 +33,17 @@
         .heart {
             color: red;
             font-size: 50px;
-            animation: pulse 1s infinite;
+            animation: pulse 1s infinite, glow 1.5s infinite alternate;
         }
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.2); }
             100% { transform: scale(1); }
+        }
+        @keyframes glow {
+            0% { text-shadow: 0 0 3px red, 0 0 6px red; }
+            50% { text-shadow: 0 0 5px red, 0 0 10px red; }
+            100% { text-shadow: 0 0 3px red, 0 0 6px red; }
         }
         .time {
             font-size: 1.5em;
@@ -47,6 +53,19 @@
             max-width: 100%;
             border-radius: 8px;
             margin-bottom: 20px;
+        }
+        /* Estilos para corações caindo */
+        @keyframes fall {
+            0% { transform: translateY(-10vh) scale(0.8); opacity: 1; }
+            100% { transform: translateY(100vh) scale(1.2); opacity: 0; }
+        }
+        .heart-fall {
+            position: fixed;
+            top: -10vh;
+            font-size: 30px;
+            color: pink;
+            opacity: 0.7;
+            animation: fall 5s linear infinite;
         }
     </style>
 </head>
@@ -83,8 +102,20 @@
                 ${horasRestantes} horas, ${minutosRestantes} minutos, ${segundosRestantes} segundos
             `;
         }
-
         setInterval(updateCounter, 1000);
+
+        // Função para criar corações caindo na tela
+        function createFallingHeart() {
+            const heart = document.createElement("div");
+            heart.innerHTML = "❤️";
+            heart.classList.add("heart-fall");
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+            document.body.appendChild(heart);
+
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+        setInterval(createFallingHeart, 800);
     </script>
 </body>
 </html>
