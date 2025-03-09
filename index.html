@@ -13,17 +13,31 @@
             height: 100vh;
             margin: 0;
             background-color: #8b0000; /* Fundo vermelho escuro */
-            color: white; /* Texto branco para melhor contraste */
+            color: white;
             text-align: center;
         }
         .counter {
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            background-color: rgba(0, 0, 0, 0.3); /* Fundo semi-transparente para destacar o texto */
+            background-color: rgba(0, 0, 0, 0.3);
         }
         h1 {
             font-size: 2em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        .heart {
+            color: red;
+            font-size: 50px;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
         .time {
             font-size: 1.5em;
@@ -38,7 +52,9 @@
 </head>
 <body>
     <div class="counter">
-        <h1>CONTADOR DE TEMPO JUNTOS</h1>
+        <h1>
+            <span class="heart">❤️</span> CONTADOR DE TEMPO JUNTOS <span class="heart">❤️</span>
+        </h1>
         <img src="https://i.imgur.com/dHbeuiQ.jpeg" alt="Imagem do contador">
         <div class="time" id="counter"></div>
     </div>
