@@ -6,20 +6,21 @@
     <title>CONTADOR DE TEMPO JUNTOS</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Helvetica, Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f4f4f4;
+            background-color: #8b0000; /* Fundo vermelho escuro */
+            color: white; /* Texto branco para melhor contraste */
+            text-align: center;
         }
         .counter {
-            text-align: center;
-            background-color: #fff;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            background-color: rgba(0, 0, 0, 0.3); /* Fundo semi-transparente para destacar o texto */
         }
         h1 {
             font-size: 2em;
@@ -38,13 +39,12 @@
 <body>
     <div class="counter">
         <h1>CONTADOR DE TEMPO JUNTOS</h1>
-        <!-- Link direto da imagem do Imgur -->
         <img src="https://i.imgur.com/dHbeuiQ.jpeg" alt="Imagem do contador">
         <div class="time" id="counter"></div>
     </div>
 
     <script>
-        const dataInicio = new Date("2021-05-04T00:00:00"); // Substitua com a data de início do relacionamento
+        const dataInicio = new Date("2021-05-04T00:00:00");
         function updateCounter() {
             const now = new Date();
             const diff = now - dataInicio;
@@ -68,7 +68,7 @@
             `;
         }
 
-        setInterval(updateCounter, 1000); // Atualiza a cada 1 segundo
+        setInterval(updateCounter, 1000);
     </script>
 </body>
 </html>
