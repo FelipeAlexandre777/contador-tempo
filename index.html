@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,9 +34,11 @@
             0% {
                 box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3), 0 0 30px rgba(255, 255, 255, 0.1);
             }
+
             50% {
                 box-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.7), 0 0 40px rgba(255, 255, 255, 0.5);
             }
+
             100% {
                 box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3), 0 0 30px rgba(255, 255, 255, 0.1);
             }
@@ -61,15 +64,31 @@
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
 
         @keyframes glow {
-            0% { text-shadow: 0 0 3px red, 0 0 6px red; }
-            50% { text-shadow: 0 0 5px red, 0 0 10px red; }
-            100% { text-shadow: 0 0 3px red, 0 0 6px red; }
+            0% {
+                text-shadow: 0 0 3px red, 0 0 6px red;
+            }
+
+            50% {
+                text-shadow: 0 0 5px red, 0 0 10px red;
+            }
+
+            100% {
+                text-shadow: 0 0 3px red, 0 0 6px red;
+            }
         }
 
         .time {
@@ -83,9 +102,11 @@
             0% {
                 text-shadow: 0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px rgba(255, 255, 255, 0.4);
             }
+
             50% {
                 text-shadow: 0 0 10px rgba(255, 255, 255, 0.9), 0 0 20px rgba(255, 255, 255, 0.7);
             }
+
             100% {
                 text-shadow: 0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px rgba(255, 255, 255, 0.4);
             }
@@ -99,8 +120,15 @@
         }
 
         @keyframes fall {
-            0% { transform: translateY(-10vh) scale(0.8) rotate(0); opacity: 1; }
-            100% { transform: translateY(100vh) scale(1.5) rotate(360deg); opacity: 0; }
+            0% {
+                transform: translateY(-10vh) scale(0.8) rotate(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh) scale(1.5) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         .heart-fall {
@@ -122,12 +150,15 @@
             .time {
                 font-size: 1.2em;
             }
+
             h1 {
                 font-size: 1.5em;
             }
+
             .heart-fall {
                 font-size: 20px;
             }
+
             img {
                 max-width: 80%;
             }
@@ -137,12 +168,13 @@
             position: fixed;
             bottom: 10px;
             right: 10px;
-            font-size: 0.8em; /* Ajustei o tamanho para ser menor */
+            font-size: 0.8em;
             color: white;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
         }
     </style>
 </head>
+
 <body>
     <div id="current-time" aria-live="polite"></div>
     <div class="counter">
@@ -172,7 +204,6 @@
             const anos = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
 
             const counterElement = document.getElementById("counter");
-
             const novoTexto = `${anos} ano(s), ${meses} mês(es), ${dias} dia(s)<br>${horas} hora(s), ${minutos} minuto(s), ${segundos} segundo(s)`;
 
             if (counterElement.innerHTML !== novoTexto) {
@@ -207,8 +238,8 @@
             document.body.appendChild(heart);
             setTimeout(() => heart.remove(), 7000);
         }
-
         setInterval(createFallingHeart, 800);
     </script>
 </body>
+
 </html>
