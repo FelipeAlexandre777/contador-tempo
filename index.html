@@ -143,6 +143,15 @@
       color: white;
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
     }
+
+    .total-days {
+      font-size: 0.8em;
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      color: white;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+    }
   </style>
 </head>
 <body>
@@ -153,6 +162,7 @@
     </h1>
     <img src="https://i.imgur.com/dHbeuiQ.jpeg" alt="Imagem do contador com coração" />
     <div class="time" id="counter"></div>
+    <div class="total-days" id="total-days"></div>  <!-- Total de dias -->
   </div>
   <footer>@copyright Felipe by amor</footer>
   <script>
@@ -192,20 +202,23 @@
       }
       if (months < 0) { months += 12; years--; }
       
-      // Calcula o total de dias decorridos (usando a diferença em milissegundos)
       const diffMs = now - dataInicio;
       const totalDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-      // Total de semanas a partir do total de dias
+      
       const totalWeeks = Math.floor(totalDays / 7);
       
       const counterElement = document.getElementById("counter");
+      const totalDaysElement = document.getElementById("total-days");
+      
       const novoTexto = 
         `${years} Ano(s), ${months} Mês(es), ${totalWeeks} Semana(s), ${days} Dia(s)<br>` +
         `${hours} Hora(s), ${minutes} Minuto(s), ${seconds} Segundo(s)`;
-      
+        
       if (counterElement.innerHTML !== novoTexto) {
         counterElement.innerHTML = novoTexto;
       }
+
+      totalDaysElement.innerHTML = `Total de Dias: ${totalDays}`;  // Atualiza o total de dias
     }
     
     setInterval(updateCounter, 1000);
@@ -239,10 +252,9 @@
       heart.style.fontSize = Math.random() * 30 + 20 + "px";
       heart.style.transform = `rotate(${Math.random() * 360}deg)`;
       document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 7000);
     }
-    
-    setInterval(createFallingHeart, 800);
+
+    setInterval(createFallingHeart, 2000);
   </script>
 </body>
 </html>
