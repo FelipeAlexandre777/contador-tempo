@@ -32,6 +32,15 @@
       border-radius: 50%;
       animation: twinkle 1.5s infinite;
     }
+    .shooting-star {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background-color: white;
+      border-radius: 50%;
+      opacity: 1;
+      transition: all 1.5s ease-out;
+    }
     .counter {
       padding: 30px;
       border-radius: 8px;
@@ -143,7 +152,6 @@
       color: white;
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
     }
-
     .total-days {
       font-size: 0.8em;
       position: fixed;
@@ -179,12 +187,41 @@
       }
     }
     createStars();
-    
+
+    function randomizeStarPosition(star) {
+      star.style.top = Math.random() * 100 + "vh";
+      star.style.left = Math.random() * 100 + "vw";
+      star.style.animationDelay = Math.random() * 2 + "s";
+    }
+
+    function updateStarsPosition() {
+      document.querySelectorAll(".star").forEach(star => {
+        randomizeStarPosition(star);
+      });
+    }
+
+    function createShootingStar() {
+      const shootingStar = document.createElement("div");
+      shootingStar.classList.add("shooting-star");
+      shootingStar.style.top = Math.random() * 50 + "vh";
+      shootingStar.style.left = Math.random() * 100 + "vw";
+      document.body.appendChild(shootingStar);
+      setTimeout(() => {
+        shootingStar.style.transform = "translateX(50vw) translateY(50vh) scale(1.5)";
+        shootingStar.style.opacity = "0";
+      }, 50);
+      setTimeout(() => {
+        shootingStar.remove();
+      }, 2000);
+    }
+
+    setInterval(updateStarsPosition, 5000);
+    setInterval(createShootingStar, 8000);
+
     const dataInicio = new Date("2021-05-04T21:37:00");
-    
+
     function updateCounter() {
       const now = new Date();
-      
       let years   = now.getFullYear() - dataInicio.getFullYear();
       let months  = now.getMonth() - dataInicio.getMonth();
       let days    = now.getDate() - dataInicio.getDate();
@@ -204,7 +241,6 @@
       
       const diffMs = now - dataInicio;
       const totalDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-      
       const totalWeeks = Math.floor(totalDays / 7);
       
       const counterElement = document.getElementById("counter");
@@ -213,16 +249,15 @@
       const novoTexto = 
         `${years} Ano(s), ${months} Mês(es), ${totalWeeks} Semana(s), ${days} Dia(s)<br>` +
         `${hours} Hora(s), ${minutes} Minuto(s), ${seconds} Segundo(s)`;
-        
+      
       if (counterElement.innerHTML !== novoTexto) {
         counterElement.innerHTML = novoTexto;
       }
-
-      totalDaysElement.innerHTML = `Total de Dias: ${totalDays}`;  // Atualiza o total de dias
+      totalDaysElement.innerHTML = `Total de Dias: ${totalDays}`;
     }
     
     setInterval(updateCounter, 1000);
-    
+
     function updateCurrentTime() {
       const now = new Date();
       const diasDaSemana = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
@@ -234,13 +269,12 @@
       const horas = now.getHours().toString().padStart(2, '0');
       const minutos = now.getMinutes().toString().padStart(2, '0');
       const segundos = now.getSeconds().toString().padStart(2, '0');
-      
       document.getElementById("current-time").textContent = 
         `${diaSemana}, ${dia} de ${mes} de ${ano} - ${horas}:${minutos}:${segundos}`;
     }
     
     setInterval(updateCurrentTime, 1000);
-    
+
     function createFallingHeart() {
       const heart = document.createElement("div");
       heart.innerHTML = "❤️";
@@ -253,7 +287,7 @@
       heart.style.transform = `rotate(${Math.random() * 360}deg)`;
       document.body.appendChild(heart);
     }
-
+    
     setInterval(createFallingHeart, 2000);
   </script>
 </body>
