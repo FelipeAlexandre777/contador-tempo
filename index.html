@@ -110,7 +110,6 @@
     <script>
         const dataInicio = new Date("2021-05-04T00:00:00");
 
-        // Função para atualizar o contador
         function updateCounter() {
             const now = new Date();
             const diff = now - dataInicio;
@@ -124,7 +123,6 @@
 
             const counterElement = document.getElementById("counter");
 
-            // Atualizar o contador apenas quando os valores mudarem
             const novoTexto = `${anos} ano(s), ${meses} mês(es), ${dias} dia(s)<br>${horas} hora(s), ${minutos} minuto(s), ${segundos} segundo(s)`;
 
             if (counterElement.innerHTML !== novoTexto) {
@@ -133,7 +131,6 @@
         }
         setInterval(updateCounter, 1000);
 
-        // Função para exibir data e hora atual
         function updateCurrentTime() {
             const now = new Date();
             const diasDaSemana = ["domingo", "segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sábado"];
@@ -149,21 +146,19 @@
         }
         setInterval(updateCurrentTime, 1000);
 
-        // Função para criar o coração caindo
         function createFallingHeart() {
             const heart = document.createElement("div");
             heart.innerHTML = "❤️";
             heart.classList.add("heart-fall");
             heart.style.left = Math.random() * 100 + "vw";
-            heart.style.animationDuration = (Math.random() * 4 + 3) + "s"; // Animação um pouco mais longa para suavizar a queda
-            heart.style.fontSize = Math.random() * 30 + 30 + "px"; // Tamanho aleatório de 30px a 60px
+            heart.style.animationDuration = (Math.random() * 4 + 3) + "s";
+            heart.style.fontSize = Math.random() * 30 + 30 + "px";
             heart.style.transform = `rotate(${Math.random() * 360}deg)`;
             document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 7000); // Cada coração permanece visível por mais tempo
+            setTimeout(() => heart.remove(), 7000);
         }
 
-        // Aumentando a frequência de corações caindo
-        setInterval(createFallingHeart, 800); // Agora caem mais corações a cada 800ms
+        setInterval(createFallingHeart, 800);
     </script>
 </body>
 </html>
