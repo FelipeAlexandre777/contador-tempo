@@ -1,76 +1,46 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CONTADOR DE TEMPO JUNTOS</title>
   <style>
     html, body {
-      height: 100%;
-      width: 100%;
       margin: 0;
       padding: 0;
+      height: 100%;
+      font-family: 'Playfair Display', serif;
     }
 
     body {
-      font-family: 'Playfair Display', serif;
       display: flex;
-      justify-content: center;
-      align-items: center;
       flex-direction: column;
+      min-height: 100vh;
       background: linear-gradient(to bottom right, #8b0000, #ff0000);
       color: white;
       text-align: center;
-      overflow-x: hidden;
-      overflow-y: auto;
       box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
-      position: relative;
+      overflow-x: hidden;
     }
 
     .container {
+      flex: 1;
       max-width: 800px;
       width: 100%;
+      margin: 0 auto;
       padding: 20px;
       box-sizing: border-box;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    @keyframes twinkle {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
-    }
-
-    .star {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background-color: white;
-      border-radius: 50%;
-      animation: twinkle 1.5s infinite;
-    }
-
-    .shooting-star {
-      position: absolute;
-      width: 3px;
-      height: 3px;
-      background-color: white;
-      border-radius: 50%;
-      opacity: 1;
-      transition: all 1.5s ease-out;
+      position: relative;
     }
 
     .counter {
       padding: 30px;
       border-radius: 8px;
+      background-color: transparent;
+      border: 2px solid rgba(255, 255, 255, 0.3);
       box-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
                   0 0 20px rgba(255, 255, 255, 0.6),
                   0 0 30px rgba(255, 255, 255, 0.4);
-      background-color: transparent;
-      border: 2px solid rgba(255, 255, 255, 0.3);
       animation: glowEffect 1.5s infinite alternate;
     }
 
@@ -144,30 +114,58 @@
                   0 0 30px rgba(255, 0, 0, 0.4);
     }
 
+    .star, .shooting-star, .heart-fall {
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .star {
+      width: 2px;
+      height: 2px;
+      background-color: white;
+      border-radius: 50%;
+      animation: twinkle 1.5s infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .shooting-star {
+      width: 3px;
+      height: 3px;
+      background-color: white;
+      border-radius: 50%;
+      transition: all 1.5s ease-out;
+    }
+
+    .heart-fall {
+      top: -10vh;
+      color: red;
+      opacity: 0.7;
+    }
+
+    .heart-fall-left {
+      animation: fallLeft linear infinite;
+    }
+
+    .heart-fall-right {
+      animation: fallRight linear infinite;
+    }
+
     @keyframes fallLeft {
       0% { transform: translateY(-10vh) translateX(-10vw) scale(0.8) rotate(0); opacity: 1; }
-      100% { transform: translateY(90vh) translateX(-50vw) scale(1.5) rotate(360deg); opacity: 0; }
+      100% { transform: translateY(100vh) translateX(-50vw) scale(1.5) rotate(360deg); opacity: 0; }
     }
 
     @keyframes fallRight {
       0% { transform: translateY(-10vh) translateX(10vw) scale(0.8) rotate(0); opacity: 1; }
-      100% { transform: translateY(90vh) translateX(50vw) scale(1.5) rotate(360deg); opacity: 0; }
+      100% { transform: translateY(100vh) translateX(50vw) scale(1.5) rotate(360deg); opacity: 0; }
     }
-
-    .heart-fall {
-      position: absolute;
-      top: -10vh;
-      color: red;
-      opacity: 0.7;
-      pointer-events: none;
-    }
-
-    .heart-fall-left { animation: fallLeft linear infinite; }
-    .heart-fall-right { animation: fallRight linear infinite; }
 
     #current-time {
       font-size: 1.2em;
-      color: white;
       margin-bottom: 15px;
       text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
     }
@@ -181,18 +179,18 @@
 
     footer {
       font-size: 0.9em;
-      color: white;
-      margin-top: 40px;
+      margin: 20px auto;
       text-align: center;
+      color: white;
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
     }
 
+    /* Responsividade */
     @media (max-width: 768px) {
       .time { font-size: 1.2em; }
       h1 { font-size: 1.5em; }
       .heart-fall { font-size: 20px; }
       img { max-width: 80%; }
-      .counter { padding: 20px; }
     }
 
     @media (max-width: 480px) {
@@ -204,7 +202,6 @@
       h1 { font-size: 2.5em; }
       .time { font-size: 2em; }
       .heart { font-size: 60px; }
-      .counter { padding: 40px; }
       img { max-width: 70%; }
     }
   </style>
@@ -212,64 +209,16 @@
 <body>
   <div class="container">
     <div id="current-time" aria-live="polite"></div>
-
     <div class="counter">
-      <h1>
-        <span class="heart">❤️</span> CONTADOR DE TEMPO JUNTOS <span class="heart">❤️</span>
-      </h1>
-      <img src="https://i.imgur.com/dHbeuiQ.jpeg" alt="Imagem do contador com coração" />
+      <h1><span class="heart">❤️</span> CONTADOR DE TEMPO JUNTOS <span class="heart">❤️</span></h1>
+      <img src="https://i.imgur.com/dHbeuiQ.jpeg" alt="Imagem com coração" />
       <div class="time" id="counter"></div>
       <div class="total-days" id="total-days"></div>
     </div>
-
-    <footer>&copy; Felipe by amor</footer>
   </div>
+  <footer>&copy; Felipe by amor</footer>
 
   <script>
-    function createStars() {
-      const numStars = 100;
-      for (let i = 0; i < numStars; i++) {
-        const star = document.createElement("div");
-        star.classList.add("star");
-        star.style.top = Math.random() * 100 + "vh";
-        star.style.left = Math.random() * 100 + "vw";
-        star.style.animationDelay = Math.random() * 2 + "s";
-        document.body.appendChild(star);
-      }
-    }
-
-    createStars();
-
-    function randomizeStarPosition(star) {
-      star.style.top = Math.random() * 100 + "vh";
-      star.style.left = Math.random() * 100 + "vw";
-      star.style.animationDelay = Math.random() * 2 + "s";
-    }
-
-    function updateStarsPosition() {
-      document.querySelectorAll(".star").forEach(star => {
-        randomizeStarPosition(star);
-      });
-    }
-
-    function createShootingStar() {
-      const shootingStar = document.createElement("div");
-      shootingStar.classList.add("shooting-star");
-      shootingStar.style.top = Math.random() * 50 + "vh";
-      shootingStar.style.left = Math.random() * 100 + "vw";
-      document.body.appendChild(shootingStar);
-      setTimeout(() => {
-        shootingStar.style.transform = "translateX(50vw) translateY(50vh) scale(1.5)";
-        shootingStar.style.opacity = "0";
-      }, 50);
-      setTimeout(() => {
-        shootingStar.remove();
-      }, 2000);
-    }
-
-    setInterval(updateStarsPosition, 5000);
-    setInterval(createShootingStar, 8000);
-
     const dataInicio = new Date("2021-05-04T21:37:00");
 
     function updateCounter() {
@@ -317,6 +266,39 @@
         `${diaSemana}, ${dia} de ${mes} de ${ano} - ${horas}:${minutos}:${segundos}`;
     }
 
+    function createStars() {
+      const numStars = 100;
+      for (let i = 0; i < numStars; i++) {
+        const star = document.createElement("div");
+        star.classList.add("star");
+        star.style.top = Math.random() * 100 + "vh";
+        star.style.left = Math.random() * 100 + "vw";
+        star.style.animationDelay = Math.random() * 2 + "s";
+        document.body.appendChild(star);
+      }
+    }
+
+    function updateStarsPosition() {
+      document.querySelectorAll(".star").forEach(star => {
+        star.style.top = Math.random() * 100 + "vh";
+        star.style.left = Math.random() * 100 + "vw";
+        star.style.animationDelay = Math.random() * 2 + "s";
+      });
+    }
+
+    function createShootingStar() {
+      const star = document.createElement("div");
+      star.classList.add("shooting-star");
+      star.style.top = Math.random() * 50 + "vh";
+      star.style.left = Math.random() * 100 + "vw";
+      document.body.appendChild(star);
+      setTimeout(() => {
+        star.style.transform = "translateX(50vw) translateY(50vh) scale(1.5)";
+        star.style.opacity = "0";
+      }, 50);
+      setTimeout(() => star.remove(), 2000);
+    }
+
     function createFallingHeart() {
       const heart = document.createElement("div");
       heart.innerHTML = "❤️";
@@ -330,8 +312,11 @@
       document.body.appendChild(heart);
     }
 
+    createStars();
     setInterval(updateCounter, 1000);
     setInterval(updateCurrentTime, 1000);
+    setInterval(updateStarsPosition, 5000);
+    setInterval(createShootingStar, 8000);
     setInterval(createFallingHeart, 2000);
   </script>
 </body>
