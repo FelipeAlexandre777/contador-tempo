@@ -27,12 +27,15 @@
       width: 100%;
       padding: 20px;
       box-sizing: border-box;
+      min-height: auto;
+      height: auto;
     }
 
     @keyframes twinkle {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.3; }
     }
+
     .star {
       position: absolute;
       width: 2px;
@@ -41,6 +44,7 @@
       border-radius: 50%;
       animation: twinkle 1.5s infinite;
     }
+
     .shooting-star {
       position: absolute;
       width: 3px;
@@ -50,6 +54,7 @@
       opacity: 1;
       transition: all 1.5s ease-out;
     }
+
     .counter {
       padding: 30px;
       border-radius: 8px;
@@ -60,6 +65,7 @@
       border: 2px solid rgba(255, 255, 255, 0.3);
       animation: glowEffect 1.5s infinite alternate;
     }
+
     @keyframes glowEffect {
       0% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
                    0 0 20px rgba(255, 255, 255, 0.3),
@@ -71,38 +77,46 @@
                      0 0 20px rgba(255, 255, 255, 0.3),
                      0 0 30px rgba(255, 255, 255, 0.1); }
     }
+
     h1 {
       font-size: 2em;
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 10px;
+      flex-wrap: wrap;
     }
+
     .heart {
       color: red;
       font-size: 50px;
       animation: pulse 1s infinite, glow 1.5s infinite alternate;
       transition: transform 0.2s ease-in-out;
     }
+
     .heart:hover {
       transform: scale(1.3);
     }
+
     @keyframes pulse {
       0% { transform: scale(1); }
       50% { transform: scale(1.2); }
       100% { transform: scale(1); }
     }
+
     @keyframes glow {
       0% { text-shadow: 0 0 3px red, 0 0 6px red; }
       50% { text-shadow: 0 0 5px red, 0 0 10px red; }
       100% { text-shadow: 0 0 3px red, 0 0 6px red; }
     }
+
     .time {
       font-size: 1.5em;
       margin-top: 10px;
       text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
       animation: textGlow 1.5s ease-in-out infinite alternate;
     }
+
     @keyframes textGlow {
       0% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.5),
                    0 0 10px rgba(255, 255, 255, 0.4); }
@@ -111,6 +125,7 @@
       100% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.5),
                      0 0 10px rgba(255, 255, 255, 0.4); }
     }
+
     img {
       max-width: 100%;
       border-radius: 8px;
@@ -119,39 +134,46 @@
                   0 0 20px rgba(255, 0, 0, 0.6),
                   0 0 30px rgba(255, 0, 0, 0.4);
     }
+
     @keyframes fallLeft {
       0% { transform: translateY(-10vh) translateX(-10vw) scale(0.8) rotate(0); opacity: 1; }
-      100% { transform: translateY(100vh) translateX(-50vw) scale(1.5) rotate(360deg); opacity: 0; }
+      100% { transform: translateY(90vh) translateX(-50vw) scale(1.5) rotate(360deg); opacity: 0; }
     }
+
     @keyframes fallRight {
       0% { transform: translateY(-10vh) translateX(10vw) scale(0.8) rotate(0); opacity: 1; }
-      100% { transform: translateY(100vh) translateX(50vw) scale(1.5) rotate(360deg); opacity: 0; }
+      100% { transform: translateY(90vh) translateX(50vw) scale(1.5) rotate(360deg); opacity: 0; }
     }
+
     .heart-fall {
-      position: fixed;
+      position: absolute;
       top: -10vh;
       color: red;
       opacity: 0.7;
-      animation: fallLeft linear infinite;
+      pointer-events: none;
     }
+
     .heart-fall-left { animation: fallLeft linear infinite; }
     .heart-fall-right { animation: fallRight linear infinite; }
+
     #current-time {
       font-size: 1.2em;
       color: white;
       margin-bottom: 15px;
       text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
     }
+
     .total-days {
       font-size: 0.8em;
-      position: fixed;
+      position: absolute;
       bottom: 10px;
       left: 10px;
       color: white;
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
     }
+
     footer {
-      position: fixed;
+      position: absolute;
       bottom: 10px;
       right: 10px;
       font-size: 0.8em;
@@ -208,6 +230,7 @@
         body.appendChild(star);
       }
     }
+
     createStars();
 
     function randomizeStarPosition(star) {
@@ -250,7 +273,7 @@
       let hours   = now.getHours() - dataInicio.getHours();
       let minutes = now.getMinutes() - dataInicio.getMinutes();
       let seconds = now.getSeconds() - dataInicio.getSeconds();
-      
+
       if (seconds < 0) { seconds += 60; minutes--; }
       if (minutes < 0) { minutes += 60; hours--; }
       if (hours < 0)   { hours += 24; days--; }
@@ -260,24 +283,18 @@
         days += prevMonth.getDate();
       }
       if (months < 0) { months += 12; years--; }
-      
+
       const diffMs = now - dataInicio;
       const totalDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
       const totalWeeks = Math.floor(totalDays / 7);
-      
-      const counterElement = document.getElementById("counter");
-      const totalDaysElement = document.getElementById("total-days");
-      
-      const novoTexto = 
+
+      document.getElementById("counter").innerHTML =
         `${years} Ano(s), ${months} Mês(es), ${totalWeeks} Semana(s), ${days} Dia(s)<br>` +
         `${hours} Hora(s), ${minutes} Minuto(s), ${seconds} Segundo(s)`;
-      
-      if (counterElement.innerHTML !== novoTexto) {
-        counterElement.innerHTML = novoTexto;
-      }
-      totalDaysElement.innerHTML = `Total de Dias: ${totalDays}`;
+
+      document.getElementById("total-days").innerHTML = `Total de Dias: ${totalDays}`;
     }
-    
+
     setInterval(updateCounter, 1000);
 
     function updateCurrentTime() {
@@ -294,7 +311,7 @@
       document.getElementById("current-time").textContent = 
         `${diaSemana}, ${dia} de ${mes} de ${ano} - ${horas}:${minutos}:${segundos}`;
     }
-    
+
     setInterval(updateCurrentTime, 1000);
 
     function createFallingHeart() {
@@ -309,7 +326,7 @@
       heart.style.transform = `rotate(${Math.random() * 360}deg)`;
       document.body.appendChild(heart);
     }
-    
+
     setInterval(createFallingHeart, 2000);
   </script>
 </body>
