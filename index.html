@@ -5,14 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CONTADOR DE TEMPO JUNTOS</title>
   <style>
+    html, body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: 'Playfair Display', serif;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      min-height: 100vh;
-      margin: 0;
       background: linear-gradient(to bottom right, #8b0000, #ff0000);
       color: white;
       text-align: center;
@@ -27,8 +32,11 @@
       width: 100%;
       padding: 20px;
       box-sizing: border-box;
-      min-height: auto;
-      height: auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
 
     @keyframes twinkle {
@@ -67,15 +75,16 @@
     }
 
     @keyframes glowEffect {
-      0% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
-                   0 0 20px rgba(255, 255, 255, 0.3),
-                   0 0 30px rgba(255, 255, 255, 0.1); }
-      50% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.9),
+      0%, 100% {
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
+                    0 0 20px rgba(255, 255, 255, 0.3),
+                    0 0 30px rgba(255, 255, 255, 0.1);
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.9),
                     0 0 30px rgba(255, 255, 255, 0.7),
-                    0 0 40px rgba(255, 255, 255, 0.5); }
-      100% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
-                     0 0 20px rgba(255, 255, 255, 0.3),
-                     0 0 30px rgba(255, 255, 255, 0.1); }
+                    0 0 40px rgba(255, 255, 255, 0.5);
+      }
     }
 
     h1 {
@@ -99,15 +108,13 @@
     }
 
     @keyframes pulse {
-      0% { transform: scale(1); }
+      0%, 100% { transform: scale(1); }
       50% { transform: scale(1.2); }
-      100% { transform: scale(1); }
     }
 
     @keyframes glow {
-      0% { text-shadow: 0 0 3px red, 0 0 6px red; }
+      0%, 100% { text-shadow: 0 0 3px red, 0 0 6px red; }
       50% { text-shadow: 0 0 5px red, 0 0 10px red; }
-      100% { text-shadow: 0 0 3px red, 0 0 6px red; }
     }
 
     .time {
@@ -118,12 +125,14 @@
     }
 
     @keyframes textGlow {
-      0% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.5),
-                   0 0 10px rgba(255, 255, 255, 0.4); }
-      50% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.9),
-                    0 0 20px rgba(255, 255, 255, 0.7); }
-      100% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.5),
-                     0 0 10px rgba(255, 255, 255, 0.4); }
+      0%, 100% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.5),
+                     0 0 10px rgba(255, 255, 255, 0.4);
+      }
+      50% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.9),
+                     0 0 20px rgba(255, 255, 255, 0.7);
+      }
     }
 
     img {
@@ -164,20 +173,17 @@
     }
 
     .total-days {
-      font-size: 0.8em;
-      position: absolute;
-      bottom: 10px;
-      left: 10px;
+      font-size: 0.9em;
+      margin-top: 20px;
       color: white;
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
     }
 
     footer {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      font-size: 0.8em;
+      font-size: 0.9em;
       color: white;
+      margin-top: 40px;
+      text-align: center;
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
     }
 
@@ -206,6 +212,7 @@
 <body>
   <div class="container">
     <div id="current-time" aria-live="polite"></div>
+
     <div class="counter">
       <h1>
         <span class="heart">❤️</span> CONTADOR DE TEMPO JUNTOS <span class="heart">❤️</span>
@@ -214,20 +221,20 @@
       <div class="time" id="counter"></div>
       <div class="total-days" id="total-days"></div>
     </div>
+
+    <footer>&copy; Felipe by amor</footer>
   </div>
-  <footer>&copy; Felipe by amor</footer>
 
   <script>
     function createStars() {
       const numStars = 100;
-      const body = document.body;
       for (let i = 0; i < numStars; i++) {
         const star = document.createElement("div");
         star.classList.add("star");
         star.style.top = Math.random() * 100 + "vh";
         star.style.left = Math.random() * 100 + "vw";
         star.style.animationDelay = Math.random() * 2 + "s";
-        body.appendChild(star);
+        document.body.appendChild(star);
       }
     }
 
@@ -267,16 +274,16 @@
 
     function updateCounter() {
       const now = new Date();
-      let years   = now.getFullYear() - dataInicio.getFullYear();
-      let months  = now.getMonth() - dataInicio.getMonth();
-      let days    = now.getDate() - dataInicio.getDate();
-      let hours   = now.getHours() - dataInicio.getHours();
+      let years = now.getFullYear() - dataInicio.getFullYear();
+      let months = now.getMonth() - dataInicio.getMonth();
+      let days = now.getDate() - dataInicio.getDate();
+      let hours = now.getHours() - dataInicio.getHours();
       let minutes = now.getMinutes() - dataInicio.getMinutes();
       let seconds = now.getSeconds() - dataInicio.getSeconds();
 
       if (seconds < 0) { seconds += 60; minutes--; }
       if (minutes < 0) { minutes += 60; hours--; }
-      if (hours < 0)   { hours += 24; days--; }
+      if (hours < 0) { hours += 24; days--; }
       if (days < 0) {
         months--;
         const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
@@ -284,49 +291,47 @@
       }
       if (months < 0) { months += 12; years--; }
 
-      const diffMs = now - dataInicio;
-      const totalDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+      const totalDays = Math.floor((now - dataInicio) / (1000 * 60 * 60 * 24));
       const totalWeeks = Math.floor(totalDays / 7);
 
       document.getElementById("counter").innerHTML =
         `${years} Ano(s), ${months} Mês(es), ${totalWeeks} Semana(s), ${days} Dia(s)<br>` +
         `${hours} Hora(s), ${minutes} Minuto(s), ${seconds} Segundo(s)`;
 
-      document.getElementById("total-days").innerHTML = `Total de Dias: ${totalDays}`;
+      document.getElementById("total-days").textContent = `Total de Dias: ${totalDays}`;
     }
-
-    setInterval(updateCounter, 1000);
 
     function updateCurrentTime() {
       const now = new Date();
-      const diasDaSemana = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
-      const mesesDoAno = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+      const dias = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
+      const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
       const dia = now.getDate();
-      const mes = mesesDoAno[now.getMonth()];
+      const mes = meses[now.getMonth()];
       const ano = now.getFullYear();
-      const diaSemana = diasDaSemana[now.getDay()];
-      const horas = now.getHours().toString().padStart(2, '0');
-      const minutos = now.getMinutes().toString().padStart(2, '0');
-      const segundos = now.getSeconds().toString().padStart(2, '0');
-      document.getElementById("current-time").textContent = 
+      const diaSemana = dias[now.getDay()];
+      const horas = String(now.getHours()).padStart(2, '0');
+      const minutos = String(now.getMinutes()).padStart(2, '0');
+      const segundos = String(now.getSeconds()).padStart(2, '0');
+
+      document.getElementById("current-time").textContent =
         `${diaSemana}, ${dia} de ${mes} de ${ano} - ${horas}:${minutos}:${segundos}`;
     }
-
-    setInterval(updateCurrentTime, 1000);
 
     function createFallingHeart() {
       const heart = document.createElement("div");
       heart.innerHTML = "❤️";
       heart.classList.add("heart-fall");
-      const trajectory = Math.random() > 0.5 ? "heart-fall-left" : "heart-fall-right";
-      heart.classList.add(trajectory);
+      const side = Math.random() > 0.5 ? "heart-fall-left" : "heart-fall-right";
+      heart.classList.add(side);
       heart.style.left = Math.random() * 100 + "vw";
       heart.style.animationDuration = (Math.random() * 4 + 3) + "s";
-      heart.style.fontSize = Math.random() * 30 + 20 + "px";
+      heart.style.fontSize = (Math.random() * 30 + 20) + "px";
       heart.style.transform = `rotate(${Math.random() * 360}deg)`;
       document.body.appendChild(heart);
     }
 
+    setInterval(updateCounter, 1000);
+    setInterval(updateCurrentTime, 1000);
     setInterval(createFallingHeart, 2000);
   </script>
 </body>
