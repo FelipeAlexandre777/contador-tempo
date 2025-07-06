@@ -11,12 +11,13 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
       background: linear-gradient(to bottom right, #8b0000, #ff0000);
       color: white;
       text-align: center;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: auto;
       box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
       position: relative;
     }
@@ -192,7 +193,7 @@
       <div class="total-days" id="total-days"></div>
     </div>
   </div>
-  <footer>@copyright Felipe by amor</footer>
+  <footer>&copy; Felipe by amor</footer>
 
   <script>
     function createStars() {
